@@ -26,18 +26,16 @@ export default function App() {
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../assets/HomePageLogo.png')}/>
       
-      <TouchableOpacity style={styles.fpbuttons}
-        onPress={() => '/login'}>
+      <TouchableOpacity style={styles.fpbuttons}>
           <Link href="/login" style={styles.fpbuttontext}>Login</Link>
         </TouchableOpacity>
       <Separator/>
       <TouchableOpacity
-        style={styles.fpbuttons}
-        onPress={() => '/register'}>
-          <Text style={styles.fpbuttontext}>Register</Text>
+        style={styles.fpbuttons}>
+           <Link href="/signup" style={styles.fpbuttontext}>Signup</Link>
         </TouchableOpacity>
      
-      <StatusBar style="auto" />
+      <StatusBar style="auto" />  
     </View>
      </AnimatedSplash>
   );
