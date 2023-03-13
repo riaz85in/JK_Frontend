@@ -3,13 +3,12 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Input, NativeBaseProvider, Icon, Image } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import { Link } from "expo-router";
+import store from "../store/store";
 
 const Separator = () => <View style={styles.separator} />;
 
 function Login() {
-    const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.Middle}>
@@ -102,7 +101,7 @@ function Login() {
 
 export default () => {
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider store={store}>
      
         <Login />
       

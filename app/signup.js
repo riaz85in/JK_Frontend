@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Input, NativeBaseProvider, Icon, Image } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -11,7 +11,7 @@ const Separator = () => <View style={styles.separator} />;
 function Signup() {
     const navigation = useNavigation();
   return (
-    <LinearGradient colors={['#6F7D71','#00600E']} style={styles.container}>
+    <SafeAreaView style={styles.container}>
   
       <View style={styles.Middle}>
         <Image alt='value' style={styles.logo1} source={require('../assets/JKIcon.png')}/>
@@ -150,7 +150,7 @@ function Signup() {
         </TouchableOpacity>
         </View>
       
-    </LinearGradient>
+    </SafeAreaView>
   );
 }
 

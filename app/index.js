@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import AnimatedSplash from "react-native-animated-splash-screen";
 import { Link } from "expo-router";
 
+
 const Separator = () => <View style={styles.separator} />;
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
   }, 3000);
   
   return (
+    
    <AnimatedSplash
       translucent={true}
       isLoaded={loading}
