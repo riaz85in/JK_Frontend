@@ -2,10 +2,19 @@ import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import AnimatedSplash from "react-native-animated-splash-screen";
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 
 
 const Separator = () => <View style={styles.separator} />;
+
+function HeaderTitle() {
+  return (
+    <Image
+      style={{ width: 150, height: 50}}
+      source={require('../assets/HomePageLogo_TP.png')}
+    />
+  );
+}
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -24,6 +33,7 @@ export default function App() {
       logoHeight={200}
       logoWidth={200}
     >
+    
 
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../assets/HomePageLogo.png')}/>

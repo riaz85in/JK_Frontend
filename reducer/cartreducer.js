@@ -24,11 +24,15 @@ export const cartSlice = createSlice({
         },
         decrementQuantity : (state,action) => {
             const itemInCart = state.cart.find((item) => item.id == action.payload.id);
-            if(itemInCart.quantity == 1){
+            if(itemInCart && itemInCart.quantity == 1){
                 const removeFromCart = state.cart.filter((item) => item.id !== action.payload.id);
                 state.cart = removeFromCart;
             }else{
-                itemInCart.quantity--;
+                if(itemInCart){
+                    itemInCart.quantity--;
+                } else {
+                    console.log('No item in cart');
+                }
             }
 
         }
