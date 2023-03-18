@@ -17,9 +17,17 @@ import {
 import store from "../store/store";
 import { ScrollView } from "react-native-gesture-handler";
 import { Link, Stack } from "expo-router";
-import { DataTable, Text } from "react-native-paper";
+import {
+  DataTable,
+  Text,
+  SegmentedButtons,
+  Button,
+  TextInput,
+} from "react-native-paper";
 import { Input, NativeBaseProvider, Image, theme, Icon } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
+import { sendEmail } from "./sendemail";
 
 const Separator = () => <View style={styles.separator} />;
 
@@ -33,9 +41,30 @@ function HeaderTitle() {
 }
 
 function Cart() {
+  //For Segmented buttons
+  const [value, setValue] = React.useState("pickup");
+
+  //For Datepicker
+  const [inputDate, setInputDate] = React.useState(undefined);
+
+  //For Timepicker
+  const [visible, setVisible] = React.useState(false);
+  const [time, setTime] = React.useState("00:00");
+
+  const onDismiss = React.useCallback(() => {
+    setVisible(false);
+  }, [setVisible]);
+
+  const onConfirm = React.useCallback(
+    ({ hours, minutes }) => {
+      setVisible(false);
+      setTime(hours + ":" + minutes);
+    },
+    [setVisible, setTime]
+  );
+
   const cart = useSelector((state) => state.cart.cart);
   console.log(cart);
-
   const dispatch = useDispatch();
   const addItemToCart = (item) => {
     dispatch(addToCart(item));
@@ -59,6 +88,18 @@ function Cart() {
     return total;
   };
 
+  const sendEmailToOwner = async () => {
+    alert("Here");
+    sendEmail(
+      "riaz85in@yahoo.co.in",
+      "We need your feedback",
+      "UserName, we need 2 minutes of your time to fill this quick survey [link]",
+      { cc: "riaz85in@gmail.com" }
+    ).then(() => {
+      console.log("Your message was successfully sent!");
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Stack.Screen
@@ -72,6 +113,10 @@ function Cart() {
         }}
       />
       <View style={{ paddingLeft: 10 }}>
+        <View style={styles.boxStyleX}>
+          <Text variant="titleMedium">Order details</Text>
+        </View>
+        <Separator />
         {cart.map((item) => (
           <Pressable key={item.id}>
             <View style={styles.row}>
@@ -160,8 +205,6 @@ function Cart() {
           />
         </View>
       </View>
-
-      {/* Password Input Field */}
       <View style={styles.buttonStyleX}>
         <View style={styles.emailInput}>
           <Input
@@ -189,15 +232,130 @@ function Cart() {
           />
         </View>
       </View>
+      <View style={styles.buttonStyleX}>
+        <View style={styles.emailInput}>
+          <DatePickerInput
+            locale="en"
+            label="Order date"
+            value={inputDate}
+            onChange={(d) => setInputDate(d)}
+            inputMode="start"
+          />
+        </View>
+      </View>
+
+      <View style={styles.segbutton}>
+        <SegmentedButtons
+          density="small"
+          style={{ width: 200 }}
+          value={value}
+          onValueChange={setValue}
+          buttons={[
+            {
+              value: "pickup",
+              label: "Pickup",
+            },
+            {
+              value: "delivery",
+              label: "Delivery",
+            },
+          ]}
+        />
+      </View>
+      {value === "delivery" && (
+        <View style={styles.buttonStyleX}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="map-marked-alt" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              placeholder="Delivery Address"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
+        </View>
+      )}
+      {value === "delivery" && (
+        <View style={styles.buttonStyleX}>
+          <View style={styles.timerow}>
+            <View style={styles.timecolumn}>
+              <Button
+                onPress={() => setVisible(true)}
+                uppercase={false}
+                mode="outlined"
+                style={styles.timebutton}
+              >
+                <Text style={styles.timebuttontext}>Pick time</Text>
+              </Button>
+              <TimePickerModal
+                visible={visible}
+                onDismiss={onDismiss}
+                onConfirm={onConfirm}
+                hours={12}
+                minutes={14}
+              />
+            </View>
+            <View>
+              <Text>{"        "}</Text>
+            </View>
+            <View style={styles.timecolumn}>
+              <Input
+                InputLeftElement={
+                  <Icon
+                    as={<FontAwesome5 name="clock" />}
+                    size="sm"
+                    m={2}
+                    _light={{
+                      color: "black",
+                    }}
+                    _dark={{
+                      color: "gray.300",
+                    }}
+                  />
+                }
+                variant="outline"
+                placeholder="Delivery Time"
+                value={time}
+                _light={{
+                  placeholderTextColor: "blueGray.400",
+                }}
+                _dark={{
+                  placeholderTextColor: "blueGray.50",
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      )}
       <Separator />
       {/* Button */}
 
       <View style={styles.Middle}>
-        <TouchableOpacity style={styles.fpbuttons}>
-          <Link href="/items" style={styles.fpbuttontext}>
-            Submit Order
-          </Link>
-        </TouchableOpacity>
+        <Button
+          onPress={() => sendEmailToOwner()}
+          uppercase={false}
+          mode="outlined"
+          style={styles.timebutton}
+        >
+          <Text style={styles.timebuttontext}>Submit Order</Text>
+        </Button>
+
         <Separator />
         <TouchableOpacity style={styles.fpbuttons}>
           <Link href="/items" style={styles.fpbuttontext}>
@@ -304,20 +462,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 8,
   },
-  fpbuttons: {
-    alignItems: "center",
-    backgroundColor: "#e56e29",
-    padding: 5,
-    width: "40%",
-    borderRadius: 8,
-    marginLeft: 10,
-    marginBottom: 10,
-  },
-  fpbuttontext: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "black",
-  },
   headertext: {
     fontSize: 30,
     fontWeight: "bold",
@@ -351,14 +495,31 @@ const styles = StyleSheet.create({
     marginRight: 15,
     justifyContent: "space-around",
   },
+  boxStyleX: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginRight: 20,
+    justifyContent: "space-around",
+  },
   fpbuttons: {
     alignItems: "center",
     backgroundColor: "#e56e29",
     padding: 5,
     width: "60%",
   },
+  timebutton: {
+    alignItems: "center",
+    backgroundColor: "#e56e29",
+    width: 120,
+    height: 40,
+  },
   fpbuttontext: {
     fontSize: 15,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  timebuttontext: {
+    fontSize: 12,
     fontWeight: "bold",
     color: "#fff",
   },
@@ -376,6 +537,10 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     backgroundColor: "#E3E4E2",
   },
+  timerow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   lastrow: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -386,6 +551,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     width: "10%",
+  },
+  timecolumn: {
+    flexDirection: "column",
+    alignItems: "center",
+    width: "30%",
   },
   firstcolumntext: {
     color: "blue",
@@ -405,5 +575,9 @@ const styles = StyleSheet.create({
   },
   textCenter: {
     textAlign: "center",
+  },
+  segbutton: {
+    marginTop: 20,
+    alignItems: "center",
   },
 });

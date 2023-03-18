@@ -1,211 +1,224 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Input, NativeBaseProvider, Icon, Image } from 'native-base';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Link } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
+import { Input, NativeBaseProvider, Icon, Image } from "native-base";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Link, Stack } from "expo-router";
 import store from "../store/store";
 
 const Separator = () => <View style={styles.separator} />;
 
 function Login() {
   return (
-    <View style={styles.container}>
-      <View style={styles.Middle}>
-        <Image alt='value' style={styles.logo1} source={require('../assets/JKIcon.png')}/>
-        <Text style={styles.LoginText}>You are so close to AWESOME FOOD from</Text>
-        <Image alt='value' style={styles.logo} source={require('../assets/LogoText.png')}/>
-      </View>
-      
-
-      {/* Username or Email Input Field */}
-      <View style={styles.buttonStyle}>
-        
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="user-secret" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            placeholder="Username"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
-
+    <SafeAreaView style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
+      <View style={styles.container}>
+        <View style={styles.Middle}>
+          <Image
+            alt="value"
+            style={styles.logo1}
+            source={require("../assets/JKIcon.png")}
+          />
+          <Text style={styles.LoginText}>
+            You are so close to AWESOME FOOD from
+          </Text>
+          <Image
+            alt="value"
+            style={styles.logo}
+            source={require("../assets/LogoText.png")}
           />
         </View>
-      </View>
 
-      {/* Password Input Field */}
-      <View style={styles.buttonStyleX}>
-        
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="key" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            secureTextEntry={true}
-            placeholder="Password"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
-          />
+        {/* Username or Email Input Field */}
+        <View style={styles.buttonStyle}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="user-secret" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              placeholder="Username"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
         </View>
-      </View>
-       <Separator/>
-      {/* Button */}
-     
-      <View style={styles.Middle}>
-      <TouchableOpacity style={styles.fpbuttons}>
-          <Link href="/items" style={styles.fpbuttontext}>Login</Link>
-        </TouchableOpacity>
-        </View>
-    
-      <View style={styles.text2}>
-        <Text style={styles.normaltext}>Don't have an account? </Text>
-        <Link href="/signup" style={styles.Linktext}>Signup</Link>
-      </View>
-      <StatusBar style="auto" />
-    </View>
 
-    
+        {/* Password Input Field */}
+        <View style={styles.buttonStyleX}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="key" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              secureTextEntry={true}
+              placeholder="Password"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
+        </View>
+        <Separator />
+        {/* Button */}
+
+        <View style={styles.Middle}>
+          <TouchableOpacity style={styles.fpbuttons}>
+            <Link href="/items" style={styles.fpbuttontext}>
+              Login
+            </Link>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.text2}>
+          <Text style={styles.normaltext}>Don't have an account? </Text>
+          <Link href="/signup" style={styles.Linktext}>
+            Signup
+          </Link>
+        </View>
+        <StatusBar style="auto" />
+      </View>
+    </SafeAreaView>
   );
 }
 
 export default () => {
   return (
     <NativeBaseProvider store={store}>
-     
-        <Login />
-      
+      <Login />
     </NativeBaseProvider>
-  )
-}
-
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#A2A8A3',
   },
-  logo:{
+  logo: {
     width: 300,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
-  logo1:{
-    marginTop:100,
+  logo1: {
+    marginTop: 100,
     width: 150,
     height: 100,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   LoginText: {
-    fontSize:15,
-    fontWeight:'bold',
-    alignContent:'center',
-    color:'#F2EEEC',
-    fontFamily:'sans-serif'
+    fontSize: 15,
+    fontWeight: "bold",
+    alignContent: "center",
+    color: "#6F7D71",
+    fontFamily: "sans-serif",
   },
-  Middle:{
-    alignItems:'center',
-    justifyContent:'center',
+  Middle: {
+    alignItems: "center",
+    justifyContent: "center",
   },
-  text2:{
-    flexDirection:'row',
-    justifyContent:'center',
-    paddingTop:5
+  text2: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: 5,
   },
-  signupText:{
-    fontWeight:'bold'
+  signupText: {
+    fontWeight: "bold",
   },
-  emailField:{
-    marginLeft:15
+  emailField: {
+    marginLeft: 15,
   },
-  emailInput:{
-    marginRight:5,
-    backgroundColor:'#fff',
+  emailInput: {
+    marginRight: 5,
+    backgroundColor: "#fff",
   },
-  buttonStyle:{
-    marginTop:30,
-    marginLeft:15,
-    marginRight:15
+  buttonStyle: {
+    marginTop: 10,
+    marginLeft: 15,
+    marginRight: 15,
   },
-  buttonStyleX:{
-    marginTop:12,
-    marginLeft:15,
-    marginRight:15
+  buttonStyleX: {
+    marginTop: 12,
+    marginLeft: 15,
+    marginRight: 15,
   },
-  buttonDesign:{
-    backgroundColor:'#E88449'
+  buttonDesign: {
+    backgroundColor: "#E88449",
   },
-  lineStyle:{
-    flexDirection:'row',
-    marginTop:30,
-    marginLeft:15,
-    marginRight:15,
-    alignItems:'center'
+  lineStyle: {
+    flexDirection: "row",
+    marginTop: 30,
+    marginLeft: 15,
+    marginRight: 15,
+    alignItems: "center",
   },
-  imageStyle:{
-    width:80,
-    height:80,
-    marginLeft:20,
+  imageStyle: {
+    width: 80,
+    height: 80,
+    marginLeft: 20,
   },
-  boxStyle:{
-    flexDirection:'row',
-    marginTop:30,
-    marginLeft:15,
-    marginRight:15,
-    justifyContent:'space-around'
+  boxStyle: {
+    flexDirection: "row",
+    marginTop: 30,
+    marginLeft: 15,
+    marginRight: 15,
+    justifyContent: "space-around",
   },
   fpbuttons: {
-    alignItems: 'center',
-    backgroundColor: '#e56e29',
+    alignItems: "center",
+    backgroundColor: "#e56e29",
     padding: 5,
-    width:'60%'
-  }, 
+    width: "60%",
+  },
   fpbuttontext: {
     fontSize: 15,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: "bold",
+    color: "#fff",
   },
   Linktext: {
     fontSize: 15,
-    color: 'black',
-    textDecorationLine: 'underline'
+    color: "black",
+    textDecorationLine: "underline",
   },
   normaltext: {
     fontSize: 15,
-    color: 'black'
+    color: "black",
   },
   separator: {
     marginVertical: 8,
-    borderBottomColor: '#737373',
+    borderBottomColor: "#737373",
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
