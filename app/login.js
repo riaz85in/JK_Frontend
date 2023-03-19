@@ -98,7 +98,7 @@ function Login() {
 
         <View style={styles.Middle}>
           <TouchableOpacity style={styles.fpbuttons}>
-            <Link href="/items" style={styles.fpbuttontext}>
+            <Link href="/home" style={styles.fpbuttontext}>
               Login
             </Link>
           </TouchableOpacity>
