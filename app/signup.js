@@ -10,162 +10,165 @@ import { Input, NativeBaseProvider, Icon, Image } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Link, Stack } from "expo-router";
+import { Appbar, FAB, useTheme } from "react-native-paper";
 
 const Separator = () => <View style={styles.separator} />;
 
 function Signup() {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
-      <Stack.Screen
-        options={{
-          title: "Signup",
-          headerStyle: { backgroundColor: "#f4511e" },
-          headerTintColor: "#fff",
-          headerTitleStyle: {},
-        }}
-      />
-      <View style={styles.Middle}>
-        <Image
-          alt="value"
-          style={styles.logo1}
-          source={require("../assets/JKIcon.png")}
+    <>
+      <Appbar.Header style={styles.appheader}>
+        <Appbar.BackAction
+          onPress={() => navigation.goBack()}
+          color="#F2EEEC"
         />
-        <Text style={styles.LoginText}>
-          Signup now to enjoy AWESOME FOOD from
-        </Text>
-        <Image
-          alt="value"
-          style={styles.logo}
-          source={require("../assets/LogoText.png")}
-        />
-      </View>
+        <Appbar.Content title="Signup" titleStyle={styles.appheadertitle} />
+      </Appbar.Header>
 
-      {/* Username Input Field */}
-      <View style={styles.buttonStyleX}>
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="user-secret" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            placeholder="Username"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
+      <SafeAreaView style={styles.container}>
+        <View style={styles.Middle}>
+          <Image
+            alt="value"
+            style={styles.logo1}
+            source={require("../assets/JKIcon.png")}
+          />
+          <Text style={styles.LoginText}>
+            Signup now to enjoy AWESOME FOOD from
+          </Text>
+          <Image
+            alt="value"
+            style={styles.logo}
+            source={require("../assets/LogoText.png")}
           />
         </View>
-      </View>
 
-      {/* Password Input Field */}
-      <View style={styles.buttonStyleX}>
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="key" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            secureTextEntry={true}
-            placeholder="Password"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
-          />
+        {/* Username Input Field */}
+        <View style={styles.buttonStyleX}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="user-secret" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              placeholder="Username"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
         </View>
-      </View>
-      {/* Mobile no Field */}
-      <View style={styles.buttonStyleX}>
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="user-secret" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            placeholder="Mobile number starting with 0"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
-          />
-        </View>
-      </View>
-      {/* Mobile no Field */}
-      <View style={styles.buttonStyleX}>
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="user-secret" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            placeholder="Email Id"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
-          />
-        </View>
-      </View>
-      <Separator />
-      {/* Button */}
 
-      <View style={styles.Middle}>
-        <TouchableOpacity style={styles.fpbuttons}>
-          <Link href="/items" style={styles.fpbuttontext}>
-            Register
-          </Link>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+        {/* Password Input Field */}
+        <View style={styles.buttonStyleX}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="key" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              secureTextEntry={true}
+              placeholder="Password"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
+        </View>
+        {/* Mobile no Field */}
+        <View style={styles.buttonStyleX}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="user-secret" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              placeholder="Mobile number starting with 0"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
+        </View>
+        {/* Mobile no Field */}
+        <View style={styles.buttonStyleX}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="user-secret" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              placeholder="Email Id"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
+        </View>
+        <Separator />
+        {/* Button */}
+
+        <View style={styles.Middle}>
+          <TouchableOpacity style={styles.fpbuttons}>
+            <Link href="/items" style={styles.fpbuttontext}>
+              Register
+            </Link>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </>
   );
 }
 
@@ -180,6 +183,7 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff0e5",
   },
   logo: {
     width: 300,
@@ -264,5 +268,13 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderBottomColor: "#737373",
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  appheader: {
+    backgroundColor: "#E88449",
+  },
+  appheadertitle: {
+    color: "#F2EEEC",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import AnimatedSplash from "react-native-animated-splash-screen";
-import { Link, Stack } from "expo-router";
-import { Appbar } from "react-native-paper";
+import { Link } from "expo-router";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Separator = () => <View style={styles.separator} />;
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -19,14 +20,14 @@ export default function App() {
       translucent={true}
       isLoaded={loading}
       logoImage={require("../assets/LoadLogo_TP.png")}
-      backgroundColor={"#F2EEEC"}
+      backgroundColor={"#fff29c"}
       logoHeight={200}
       logoWidth={200}
     >
       <View style={styles.container}>
         <Image
           style={styles.logo}
-          source={require("../assets/HomePageLogo.png")}
+          source={require("../assets/HomePageLogo_TP.png")}
         />
 
         <TouchableOpacity style={styles.fpbuttons}>
@@ -50,7 +51,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#fff0e5",
     alignItems: "center",
     justifyContent: "center",
   },

@@ -28,19 +28,13 @@ import { Input, NativeBaseProvider, Image, theme, Icon } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
 import { sendEmail } from "./sendemail";
+import { Appbar, FAB, useTheme } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 const Separator = () => <View style={styles.separator} />;
 
-function HeaderTitle() {
-  return (
-    <Image
-      style={{ width: 50, height: 50 }}
-      source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
-    />
-  );
-}
-
 function Cart() {
+  const navigation = useNavigation();
   //For Segmented buttons
   const [value, setValue] = React.useState("pickup");
 
@@ -64,7 +58,6 @@ function Cart() {
   );
 
   const cart = useSelector((state) => state.cart.cart);
-  console.log(cart);
   const dispatch = useDispatch();
   const addItemToCart = (item) => {
     dispatch(addToCart(item));
@@ -101,174 +94,63 @@ function Cart() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Stack.Screen
-        options={{
-          title: "Your Order",
-          headerStyle: { backgroundColor: "#f4511e" },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
-      />
-      <View style={{ paddingLeft: 10 }}>
-        <View style={styles.boxStyleX}>
-          <Text variant="titleMedium">Order details</Text>
-        </View>
-        <Separator />
-        {cart.map((item) => (
-          <Pressable key={item.id}>
-            <View style={styles.row}>
-              <View style={styles.firstcolumn}>
-                <Text style={styles.firstcolumntext}>{item.quantity}X </Text>
-              </View>
-              <View style={styles.secondcolumn}>
-                <Text style={styles.textCenter}>{item.name} </Text>
-              </View>
-              <View style={styles.thirdcolumn}>
-                <Text style={styles.thirdcolumntext}>
-                  £{item.price * item.quantity}
-                </Text>
-              </View>
-            </View>
-          </Pressable>
-        ))}
-        <View style={styles.lastrow}>
-          <View style={styles.firstcolumn}>
-            <Text> </Text>
-          </View>
-          <View style={styles.secondcolumn}>
-            <Text style={{ color: "white" }}>Total</Text>
-          </View>
-          <View style={styles.thirdcolumn}>
-            <Text style={{ color: "white" }}>£{calculateTotal()}</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.boxStyle}>
-        <Text variant="titleMedium">Contact & Delivery details</Text>
-      </View>
-
-      <View style={styles.buttonStyle}>
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="user" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            placeholder="Name"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
-          />
-        </View>
-      </View>
-
-      <View style={styles.buttonStyleX}>
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="envelope" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            placeholder="Email Id"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
-          />
-        </View>
-      </View>
-      <View style={styles.buttonStyleX}>
-        <View style={styles.emailInput}>
-          <Input
-            InputLeftElement={
-              <Icon
-                as={<FontAwesome5 name="phone" />}
-                size="sm"
-                m={2}
-                _light={{
-                  color: "black",
-                }}
-                _dark={{
-                  color: "gray.300",
-                }}
-              />
-            }
-            variant="outline"
-            placeholder="Contact Number"
-            _light={{
-              placeholderTextColor: "blueGray.400",
-            }}
-            _dark={{
-              placeholderTextColor: "blueGray.50",
-            }}
-          />
-        </View>
-      </View>
-      <View style={styles.buttonStyleX}>
-        <View style={styles.emailInput}>
-          <DatePickerInput
-            locale="en"
-            label="Order date"
-            value={inputDate}
-            onChange={(d) => setInputDate(d)}
-            inputMode="start"
-          />
-        </View>
-      </View>
-
-      <View style={styles.segbutton}>
-        <SegmentedButtons
-          density="small"
-          style={{ width: 200 }}
-          value={value}
-          onValueChange={setValue}
-          buttons={[
-            {
-              value: "pickup",
-              label: "Pickup",
-            },
-            {
-              value: "delivery",
-              label: "Delivery",
-            },
-          ]}
+    <>
+      <Appbar.Header style={styles.appheader}>
+        <Appbar.BackAction
+          onPress={() => navigation.goBack()}
+          color="#F2EEEC"
         />
-      </View>
-      {value === "delivery" && (
-        <View style={styles.buttonStyleX}>
+        <Appbar.Content title="Your Order" titleStyle={styles.appheadertitle} />
+        <Appbar.Action
+          icon="home"
+          onPress={() => navigation.navigate("home")}
+        />
+      </Appbar.Header>
+      <SafeAreaView style={styles.container}>
+        <View style={{ paddingLeft: 10 }}>
+          <View style={styles.boxStyleX}>
+            <Text variant="titleMedium">Order details</Text>
+          </View>
+          <Separator />
+          {cart.map((item) => (
+            <Pressable key={item.id}>
+              <View style={styles.row}>
+                <View style={styles.firstcolumn}>
+                  <Text style={styles.firstcolumntext}>{item.quantity}X </Text>
+                </View>
+                <View style={styles.secondcolumn}>
+                  <Text style={styles.textCenter}>{item.name} </Text>
+                </View>
+                <View style={styles.thirdcolumn}>
+                  <Text style={styles.thirdcolumntext}>
+                    £{item.price * item.quantity}
+                  </Text>
+                </View>
+              </View>
+            </Pressable>
+          ))}
+          <View style={styles.lastrow}>
+            <View style={styles.firstcolumn}>
+              <Text> </Text>
+            </View>
+            <View style={styles.secondcolumn}>
+              <Text style={{ color: "white" }}>Total</Text>
+            </View>
+            <View style={styles.thirdcolumn}>
+              <Text style={{ color: "white" }}>£{calculateTotal()}</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.boxStyle}>
+          <Text variant="titleMedium">Contact & Delivery details</Text>
+        </View>
+
+        <View style={styles.buttonStyle}>
           <View style={styles.emailInput}>
             <Input
               InputLeftElement={
                 <Icon
-                  as={<FontAwesome5 name="map-marked-alt" />}
+                  as={<FontAwesome5 name="user" />}
                   size="sm"
                   m={2}
                   _light={{
@@ -280,7 +162,7 @@ function Cart() {
                 />
               }
               variant="outline"
-              placeholder="Delivery Address"
+              placeholder="Name"
               _light={{
                 placeholderTextColor: "blueGray.400",
               }}
@@ -290,35 +172,98 @@ function Cart() {
             />
           </View>
         </View>
-      )}
-      {value === "delivery" && (
+
         <View style={styles.buttonStyleX}>
-          <View style={styles.timerow}>
-            <View style={styles.timecolumn}>
-              <Button
-                onPress={() => setVisible(true)}
-                uppercase={false}
-                mode="outlined"
-                style={styles.timebutton}
-              >
-                <Text style={styles.timebuttontext}>Pick time</Text>
-              </Button>
-              <TimePickerModal
-                visible={visible}
-                onDismiss={onDismiss}
-                onConfirm={onConfirm}
-                hours={12}
-                minutes={14}
-              />
-            </View>
-            <View>
-              <Text>{"        "}</Text>
-            </View>
-            <View style={styles.timecolumn}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="envelope" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              placeholder="Email Id"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
+        </View>
+        <View style={styles.buttonStyleX}>
+          <View style={styles.emailInput}>
+            <Input
+              InputLeftElement={
+                <Icon
+                  as={<FontAwesome5 name="phone" />}
+                  size="sm"
+                  m={2}
+                  _light={{
+                    color: "black",
+                  }}
+                  _dark={{
+                    color: "gray.300",
+                  }}
+                />
+              }
+              variant="outline"
+              placeholder="Contact Number"
+              _light={{
+                placeholderTextColor: "blueGray.400",
+              }}
+              _dark={{
+                placeholderTextColor: "blueGray.50",
+              }}
+            />
+          </View>
+        </View>
+        <View style={styles.buttonStyleX}>
+          <View style={styles.emailInput}>
+            <DatePickerInput
+              locale="en"
+              label="Order date"
+              value={inputDate}
+              onChange={(d) => setInputDate(d)}
+              inputMode="start"
+            />
+          </View>
+        </View>
+
+        <View style={styles.segbutton}>
+          <SegmentedButtons
+            density="small"
+            style={{ width: 200 }}
+            value={value}
+            onValueChange={setValue}
+            buttons={[
+              {
+                value: "pickup",
+                label: "Pickup",
+              },
+              {
+                value: "delivery",
+                label: "Delivery",
+              },
+            ]}
+          />
+        </View>
+        {value === "delivery" && (
+          <View style={styles.buttonStyleX}>
+            <View style={styles.emailInput}>
               <Input
                 InputLeftElement={
                   <Icon
-                    as={<FontAwesome5 name="clock" />}
+                    as={<FontAwesome5 name="map-marked-alt" />}
                     size="sm"
                     m={2}
                     _light={{
@@ -330,8 +275,7 @@ function Cart() {
                   />
                 }
                 variant="outline"
-                placeholder="Delivery Time"
-                value={time}
+                placeholder="Delivery Address"
                 _light={{
                   placeholderTextColor: "blueGray.400",
                 }}
@@ -341,31 +285,80 @@ function Cart() {
               />
             </View>
           </View>
-        </View>
-      )}
-      <Separator />
-      {/* Button */}
-
-      <View style={styles.Middle}>
-        <Button
-          onPress={() => sendEmailToOwner()}
-          uppercase={false}
-          mode="outlined"
-          style={styles.timebutton}
-        >
-          <Text style={styles.timebuttontext}>Submit Order</Text>
-        </Button>
-
+        )}
+        {value === "delivery" && (
+          <View style={styles.buttonStyleX}>
+            <View style={styles.timerow}>
+              <View style={styles.timecolumn}>
+                <Button
+                  onPress={() => setVisible(true)}
+                  uppercase={false}
+                  mode="outlined"
+                  style={styles.timebutton}
+                >
+                  <Text style={styles.timebuttontext}>Pick time</Text>
+                </Button>
+                <TimePickerModal
+                  visible={visible}
+                  onDismiss={onDismiss}
+                  onConfirm={onConfirm}
+                  hours={12}
+                  minutes={14}
+                />
+              </View>
+              <View>
+                <Text>{"        "}</Text>
+              </View>
+              <View style={styles.timecolumn}>
+                <Input
+                  InputLeftElement={
+                    <Icon
+                      as={<FontAwesome5 name="clock" />}
+                      size="sm"
+                      m={2}
+                      _light={{
+                        color: "black",
+                      }}
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    />
+                  }
+                  variant="outline"
+                  placeholder="Delivery Time"
+                  value={time}
+                  _light={{
+                    placeholderTextColor: "blueGray.400",
+                  }}
+                  _dark={{
+                    placeholderTextColor: "blueGray.50",
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+        )}
         <Separator />
-        <TouchableOpacity style={styles.fpbuttons}>
-          <Link href="/items" style={styles.fpbuttontext}>
-            Add more items
-          </Link>
-        </TouchableOpacity>
-      </View>
+        {/* Button */}
 
-      <StatusBar style="auto" />
-    </SafeAreaView>
+        <View style={styles.Middle}>
+          <TouchableOpacity style={styles.fpbuttons}>
+            <Link href="/thankyou" style={styles.fpbuttontext}>
+              Submit Order
+            </Link>
+          </TouchableOpacity>
+
+          <Separator />
+          <TouchableOpacity style={styles.fpbuttons}>
+            <Link href="/items" style={styles.fpbuttontext}>
+              Add more items
+            </Link>
+          </TouchableOpacity>
+        </View>
+
+        <StatusBar style="auto" />
+      </SafeAreaView>
+    </>
   );
 }
 
@@ -497,7 +490,7 @@ const styles = StyleSheet.create({
   },
   boxStyleX: {
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 5,
     marginRight: 20,
     justifyContent: "space-around",
   },
@@ -579,5 +572,13 @@ const styles = StyleSheet.create({
   segbutton: {
     marginTop: 20,
     alignItems: "center",
+  },
+  appheader: {
+    backgroundColor: "#E88449",
+  },
+  appheadertitle: {
+    color: "#F2EEEC",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
