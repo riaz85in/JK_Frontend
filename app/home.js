@@ -8,23 +8,20 @@ import {
   Dimensions,
 } from "react-native";
 import { Link } from "expo-router";
-import { Appbar, FAB, useTheme } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
+import { ActivityIndicator, Appbar, FAB, useTheme } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
 
 const Separator = () => <View style={styles.separator} />;
 
-const carouselImages = [
-  "../assets/products/MuttonBiriyani_1KG.png",
-  "../assets/products/OnAPlate.png",
-  "../assets/products/CookingProcess.png",
-  "../assets/products/Bucket.png",
-  "../assets/products/Dhekhsa.png",
-];
-
 export default function App() {
-  const navigation = useNavigation();
   const width = Dimensions.get("window").width;
+  const carouselImages = [
+    { url: require("../assets/products/ChickenBiriyani.png") },
+    { url: require("../assets/products/oap.jpg") },
+    { url: require("../assets/products/cookingprocess.png") },
+    { url: require("../assets/products/bucketmin.jpg") },
+    { url: require("../assets/products/megaordermin.jpg") },
+  ];
   return (
     <>
       <Appbar.Header style={styles.appheader}>
@@ -38,22 +35,40 @@ export default function App() {
         />
       </Appbar.Header>
       <View style={styles.container}>
+        <View style={styles.row}>
+          <Image
+            alt="value"
+            style={styles.logo}
+            source={require("../assets/LoadLogo_TP.png")}
+          />
+        </View>
+        <View style={styles.row}>
+          <View style={styles.column}>
+            <Text style={styles.wbctext}>Registered with</Text>
+          </View>
+          <View style={styles.column}>
+            <Image
+              alt="value"
+              style={styles.wbc}
+              source={require("../assets/WBC.png")}
+            />
+          </View>
+        </View>
         <Carousel
           loop
           width={width}
           height={width / 2}
           autoPlay={true}
-          data={[...carouselImages.keys()]}
+          data={carouselImages}
           scrollAnimationDuration={1000}
-          renderItem={({ index }) => (
+          renderItem={({ item }) => (
             <View
               style={{
-                flex: 1,
                 borderWidth: 1,
                 justifyContent: "center",
               }}
             >
-              <Text style={{ textAlign: "center", fontSize: 30 }}>{index}</Text>
+              <Image style={styles.carouselimage} source={item.url} />
             </View>
           )}
         />
@@ -61,7 +76,7 @@ export default function App() {
           Johra's Kitchen is your go-to home catering business for authentic
           Muslim-style cuisine. Since 2018, we've been serving up mouth-watering
           dishes and with a loyal customer base already established in Malaysia,
-          we are excited to bring their authentic and flavorful cuisine to
+          we are excited to bring our authentic and flavorful cuisine to
           Newbury. Whether you're hosting a party, get-together or any event,
           Johra's Kitchen is the perfect choice to impress your guests with our
           delectable food. Our commitment to exceptional service and quality
@@ -91,7 +106,7 @@ const styles = StyleSheet.create({
   },
   boxStyle: {
     flexDirection: "row",
-    marginTop: 30,
+    marginTop: 10,
     marginLeft: 15,
     marginRight: 15,
     justifyContent: "space-around",
@@ -99,8 +114,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   logo: {
-    width: 300,
-    height: 300,
+    width: 180,
+    height: 150,
+  },
+  carouselimage: {
+    width: "100%",
+    height: "115%",
+  },
+  wbc: {
+    width: 70,
+    height: 70,
     resizeMode: "contain",
   },
   timebutton: {
@@ -136,6 +159,19 @@ const styles = StyleSheet.create({
   appheadertitle: {
     color: "#F2EEEC",
     fontSize: 18,
+    fontWeight: "bold",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  column: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  wbctext: {
     fontWeight: "bold",
   },
 });
