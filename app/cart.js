@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { useDispatch, useSelector, Provider } from "react-redux";
+import { useDispatch, useSelector, Provider, useState } from "react-redux";
 import {
   addToCart,
   decrementQuantity,
@@ -15,21 +15,14 @@ import {
   removeFromCart,
 } from "../reducer/cartreducer";
 import store from "../store/store";
-import { ScrollView } from "react-native-gesture-handler";
 import { Link, Stack } from "expo-router";
-import {
-  DataTable,
-  Text,
-  SegmentedButtons,
-  Button,
-  TextInput,
-} from "react-native-paper";
+import { Text, SegmentedButtons, Button } from "react-native-paper";
 import { Input, NativeBaseProvider, Image, theme, Icon } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
-import { sendEmail } from "./sendemail";
 import { Appbar, FAB, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import emailjs from "@emailjs/browser";
 
 const Separator = () => <View style={styles.separator} />;
 
@@ -44,6 +37,15 @@ function Cart() {
   //For Timepicker
   const [visible, setVisible] = React.useState(false);
   const [time, setTime] = React.useState("00:00");
+
+  //Name text field
+  const [name, setName] = React.useState("");
+
+  //Email field
+  const [email, setEmail] = React.useState("");
+
+  //Total field
+  const [total, setTotal] = React.useState("");
 
   const onDismiss = React.useCallback(() => {
     setVisible(false);
@@ -81,16 +83,80 @@ function Cart() {
     return total;
   };
 
-  const sendEmailToOwner = async () => {
-    alert("Here");
-    sendEmail(
-      "riaz85in@yahoo.co.in",
-      "We need your feedback",
-      "UserName, we need 2 minutes of your time to fill this quick survey [link]",
-      { cc: "riaz85in@gmail.com" }
-    ).then(() => {
-      console.log("Your message was successfully sent!");
+  const createEmailContent = () => {
+    // let itemarray = "";
+    // let countarray = "";
+    // let pricearray = "";
+    let contentArray =
+      "<table style='border-collapse: collapse; width: 100%;' border='1'><colgroup><col style='width: 33.3333%;'><col style='width: 33.3333%;'><col style='width: 33.3333%;'></colgroup><tbody><tr><td><b>Item</b></td><td><b>Count</b></td><td><b>Price</b></td></tr>";
+
+    // cart.map((item) => {
+    //   itemarray = itemarray + item.name + "<br/>";
+    //   countarray = countarray + item.quantity + "<br/>";
+    //   pricearray = pricearray + item.quantity * item.price + "<br/>";
+    // });
+
+    cart.map((item) => {
+      contentArray =
+        contentArray +
+        "<tr style='height: 18.6667px;'> <td style='height: 18.6667px;'>" +
+        item.name +
+        "</td>" +
+        "<td style='height: 18.6667px;'>" +
+        item.quantity +
+        "</td>" +
+        "<td style='height: 18.6667px;'>" +
+        item.quantity * item.price +
+        "£</td></tr>";
     });
+
+    contentArray =
+      contentArray +
+      "<tr><td>&nbsp;</td><td><b>Total</b></td><td><b>" +
+      calculateTotal() +
+      "£</b></td></tr>";
+
+    /*contentArray = {
+      itemarray: itemarray,
+      countarray: countarray,
+      pricearray: pricearray,
+    };*/
+
+    return contentArray;
+  };
+
+  const sendOrderPlacedEmail = () => {
+    const contentArray = createEmailContent();
+    const templateParams = {
+      to_name: name,
+      to_email: email,
+      orderdetails: contentArray,
+      totalamount: calculateTotal(),
+      paymentdetails:
+        "Name: Nazreen Johra Sikander Syedibrahim Sha <br/> Account# : 62850168 <br/> Sort code: 30-95-89",
+      image:
+        "<img src='https://ibb.co/t4dxL7X' alt='Logo' width='100' height='50'>",
+    };
+
+    alert(JSON.stringify(contentArray));
+
+    emailjs
+      .send(
+        "OrderConfirmation",
+        "template_123456",
+        templateParams,
+        "2PqxFvonM7H4Ne-WN"
+      )
+      .then(
+        function (response) {
+          console.log("SUCCESS!", response.status, response.text);
+          alert(response.status + " " + response.text);
+        },
+        function (error) {
+          console.log("FAILED...", JSON.stringify(error));
+          alert("Error" + JSON.stringify(error));
+        }
+      );
   };
 
   return (
@@ -148,6 +214,8 @@ function Cart() {
         <View style={styles.buttonStyle}>
           <View style={styles.emailInput}>
             <Input
+              onChangeText={(name) => setName(name)}
+              value={name}
               InputLeftElement={
                 <Icon
                   as={<FontAwesome5 name="user" />}
@@ -176,6 +244,8 @@ function Cart() {
         <View style={styles.buttonStyleX}>
           <View style={styles.emailInput}>
             <Input
+              onChangeText={(email) => setEmail(email)}
+              value={email}
               InputLeftElement={
                 <Icon
                   as={<FontAwesome5 name="envelope" />}
@@ -343,9 +413,12 @@ function Cart() {
 
         <View style={styles.Middle}>
           <TouchableOpacity style={styles.fpbuttons}>
-            <Link href="/thankyou" style={styles.fpbuttontext}>
+            <Button
+              onPress={() => sendOrderPlacedEmail()}
+              style={styles.fpbuttontext}
+            >
               Submit Order
-            </Link>
+            </Button>
           </TouchableOpacity>
 
           <Separator />
