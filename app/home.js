@@ -6,14 +6,17 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  SafeAreaView,
 } from "react-native";
 import { Link } from "expo-router";
 import { ActivityIndicator, Appbar, FAB, useTheme } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
+import { useNavigation } from "@react-navigation/native";
 
 const Separator = () => <View style={styles.separator} />;
 
 export default function App() {
+  const navigation = useNavigation();
   const width = Dimensions.get("window").width;
   const carouselImages = [
     { url: require("../assets/products/ChickenBiriyani.png") },
@@ -34,7 +37,7 @@ export default function App() {
           titleStyle={styles.appheadertitle}
         />
       </Appbar.Header>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.row}>
           <Image
             alt="value"
@@ -92,7 +95,7 @@ export default function App() {
             </Link>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     </>
   );
 }

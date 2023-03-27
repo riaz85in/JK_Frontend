@@ -19,7 +19,7 @@ export default function thankyou() {
           onPress={() => navigation.navigate("home")}
         />
       </Appbar.Header>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Image
           alt="value"
           style={styles.logo}
@@ -30,7 +30,7 @@ export default function thankyou() {
         <Text style={styles.boxStyle}>
           Please check your mail for payment instructions.
         </Text>
-      </View>
+      </SafeAreaView>
     </>
   );
 }
