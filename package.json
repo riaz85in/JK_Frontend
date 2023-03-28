@@ -15,7 +15,6 @@
     "@babel/preset-typescript": "^7.21.0",
     "@emailjs/browser": "^3.10.0",
     "@expo/vector-icons": "^13.0.0",
-    "@expo/webpack-config": "^18.0.1",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -63,6 +62,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@expo/webpack-config": "^18.0.2",
     "gh-pages": "^5.0.0"
   },
   "private": true
