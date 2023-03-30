@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.js": "/JK_Frontend/static/js/main.f55f2e59.js",
+    "static/js/617.914251b5.js": "/JK_Frontend/static/js/617.914251b5.js",
+    "favicon.ico": "/JK_Frontend/favicon.ico",
+    "index.html": "/JK_Frontend/index.html",
+    "favicon-32.png": "/JK_Frontend/favicon-32.png",
+    "favicon-16.png": "/JK_Frontend/favicon-16.png",
+    "manifest.json": "/JK_Frontend/manifest.json",
+    "serve.json": "/JK_Frontend/serve.json",
+    "main.f55f2e59.js.map": "/JK_Frontend/static/js/main.f55f2e59.js.map",
+    "617.914251b5.js.map": "/JK_Frontend/static/js/617.914251b5.js.map"
+  },
+  "entrypoints": [
+    "static/js/617.914251b5.js",
+    "static/js/main.f55f2e59.js"
+  ]
+}
