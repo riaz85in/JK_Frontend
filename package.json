@@ -1,19 +1,22 @@
 {
   "name": "johraskitchen",
   "version": "1.0.0",
-  "main": "index.js",
-  "homepage": "http://riaz85in.github.io/JK_Frontend",
+  "main": "node_modules/expo/AppEntry.js",
+  "homepage": "https://riaz85in.github.io/JK_Frontend",
   "scripts": {
     "start": "expo start",
+    "build": "react-scripts build",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "deploy": "gh-pages -d web-build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.21.0",
     "@emailjs/browser": "^3.10.0",
     "@expo/vector-icons": "^13.0.0",
+    "@expo/webpack-config": "^18.0.1",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -26,14 +29,13 @@
     "expo-constants": "~14.2.1",
     "expo-linear-gradient": "~12.1.2",
     "expo-linking": "~4.0.1",
-    "expo-router": "^1.2.2",
     "expo-status-bar": "~1.4.4",
-    "expo-updates": "~0.16.3",
+    "expo-updates": "~0.16.4",
     "native-base": "^3.4.28",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
-    "react-native": "0.71.4",
+    "react-native": "0.71.6",
     "react-native-animated-splash-screen": "^2.0.5",
     "react-native-auto-carousel": "^1.0.8",
     "react-native-gesture-handler": "^2.9.0",
@@ -53,12 +55,12 @@
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
     "react-redux": "^8.0.5",
+    "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.3.8",
     "styled-system": "^5.1.5",
-    "typescript": "^4.9.4",
-    "@expo/webpack-config": "^18.0.1"
+    "typescript": "^4.9.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

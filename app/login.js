@@ -1,11 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Pressable,
+  LinkButton,
+} from "react-native";
 import { Input, NativeBaseProvider, Icon, Image, Center } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Link, Stack } from "expo-router";
 import store from "../store/store";
-import { Appbar, FAB, useTheme } from "react-native-paper";
+import { Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 const Separator = () => <View style={styles.separator} />;
@@ -43,7 +49,7 @@ function Login() {
         <Appbar.Content title="Login" titleStyle={styles.appheadertitle} />
         <Appbar.Action
           icon="home"
-          onPress={() => navigation.navigate("home")}
+          onPress={() => navigation.navigate("Homescreen")}
         />
       </Appbar.Header>
 
@@ -126,16 +132,19 @@ function Login() {
         {/* Button */}
 
         <View style={styles.Middle}>
-          <ZoomButton title="LOGIN" onTap={() => navigation.navigate("home")} />
+          <ZoomButton
+            title="LOGIN"
+            onTap={() => navigation.navigate("Homescreen")}
+          />
         </View>
-
         <View style={styles.text2}>
           <Text style={styles.normaltext}>Don't have an account? </Text>
-          <Link href="/signup" style={styles.Linktext}>
-            Signup
-          </Link>
+          <ZoomButton
+            title="Signup"
+            onTap={() => navigation.navigate("Signup")}
+          />
         </View>
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
       </SafeAreaView>
     </>
   );
@@ -180,6 +189,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     paddingTop: 5,
+    alignContent: "center",
   },
   signupText: {
     fontWeight: "bold",

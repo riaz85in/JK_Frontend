@@ -7,15 +7,15 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
+  Link,
 } from "react-native";
-import { Link } from "expo-router";
 import { ActivityIndicator, Appbar, FAB, useTheme } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
 import { useNavigation } from "@react-navigation/native";
 
 const Separator = () => <View style={styles.separator} />;
 
-export default function App() {
+export default function HomeScreen() {
   const navigation = useNavigation();
   const width = Dimensions.get("window").width;
   const carouselImages = [

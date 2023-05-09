@@ -1,13 +1,6 @@
 import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  Image,
-  SafeAreaView,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, Image, SafeAreaView, Pressable } from "react-native";
 import { useDispatch, useSelector, Provider } from "react-redux";
 import { addToCart, decrementQty, incrementQty } from "../reducer/cartreducer";
 import {
@@ -18,9 +11,30 @@ import {
 import { getProductsFromService } from "../services/productsservice";
 import store from "../store/store";
 import { ScrollView } from "react-native-gesture-handler";
-import { Link, Stack } from "expo-router";
 import { Appbar, FAB, useTheme, Badge } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+const s = require("../assets/styles/style");
+
+const ZoomButton = ({ title, onTap }) => {
+  return (
+    <Pressable
+      onPress={onTap}
+      style={({ pressed }) => [
+        {
+          transform: [
+            {
+              scale: pressed ? 1.07 : 1,
+            },
+          ],
+          backgroundColor: "#2277ee",
+        },
+        s.button,
+      ]}
+    >
+      <Text style={s.buttonText}>{title}</Text>
+    </Pressable>
+  );
+};
 
 function Items() {
   const navigation = useNavigation();
@@ -58,12 +72,12 @@ function Items() {
 
   return (
     <>
-      <Appbar.Header style={styles.appheader}>
+      <Appbar.Header style={s.appheader}>
         <Appbar.BackAction
           onPress={() => navigation.goBack()}
           color="#F2EEEC"
         />
-        <Appbar.Content title="Our Menu" titleStyle={styles.appheadertitle} />
+        <Appbar.Content title="Our Menu" titleStyle={s.appheadertitle} />
         <Appbar.Action
           icon="home"
           onPress={() => navigation.navigate("home")}
@@ -81,14 +95,14 @@ function Items() {
         />
       </Appbar.Header>
 
-      <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollcontainer}>
+      <SafeAreaView style={s.container}>
+        <ScrollView contentContainerStyle={s.scrollcontainer}>
           {products.map((item) => (
-            <Pressable style={styles.cardFirst} key={item.id}>
-              <Image alt="value" style={styles.thumb} source={item.image} />
-              <SafeAreaView style={styles.infoContainer}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.price}>£{item.price}</Text>
+            <Pressable style={s.cardFirst} key={item.id}>
+              <Image alt="value" style={s.thumb} source={item.image} />
+              <SafeAreaView style={s.infoContainer}>
+                <Text style={s.name}>{item.name}</Text>
+                <Text style={s.price}>£{item.price}</Text>
                 {cart.some((value) => value.id === item.id) ? (
                   <Pressable
                     style={{
@@ -149,9 +163,9 @@ function Items() {
                 ) : (
                   <Pressable
                     onPress={() => addItemToCart(item)}
-                    style={styles.fpbuttons}
+                    style={s.fpbuttons}
                   >
-                    <Text style={styles.fpbuttontext}>ADD TO CART</Text>
+                    <Text style={s.fpbuttontext}>ADD TO CART</Text>
                   </Pressable>
                 )}
               </SafeAreaView>
@@ -173,92 +187,108 @@ export default () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff0e5",
-  },
-  scrollcontainer: {
-    backgroundColor: "#E3E4E2",
-    alignItems: "center",
-  },
-  cardFirst: {
-    width: "80%",
-    marginTop: 20,
-    backgroundColor: "#F2EEEC",
-    borderRadius: 10,
-    shadowOpacity: 2,
-    shadowRadius: 6,
-    shadowColor: "black",
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: 2,
-    marginVertical: 20,
-  },
-  card: {
-    width: "80%",
-    marginTop: 20,
-    backgroundColor: "#F2EEEC",
-    borderRadius: 16,
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    shadowColor: "black",
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: 2,
-    marginVertical: 20,
-  },
-  thumb: {
-    height: 150,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    width: "100%",
-  },
-  infoContainer: {
-    padding: 16,
-  },
-  name: {
-    fontSize: 22,
-    fontWeight: "bold",
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 8,
-  },
-  fpbuttons: {
-    alignItems: "center",
+  button: {
+    padding: 8,
+    marginBottom: 20,
+    borderRadius: 6,
     backgroundColor: "#e56e29",
-    padding: 5,
-    width: "50%",
-    borderRadius: 8,
-    marginLeft: 10,
-    marginBottom: 10,
+    width: 100,
   },
-  fpbuttontext: {
+  buttonText: {
     fontSize: 15,
-    fontWeight: "bold",
+    textAlign: "center",
     color: "#fff",
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  logo: {
-    width: 50,
-    height: 50,
-    resizeMode: "contain",
-  },
-  appheader: {
-    backgroundColor: "#E88449",
-  },
-  appheadertitle: {
-    color: "#F2EEEC",
-    fontSize: 18,
     fontWeight: "bold",
   },
 });
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff0e5",
+//   },
+//   scrollcontainer: {
+//     backgroundColor: "#E3E4E2",
+//     alignItems: "center",
+//   },
+//   cardFirst: {
+//     width: "80%",
+//     marginTop: 20,
+//     backgroundColor: "#F2EEEC",
+//     borderRadius: 10,
+//     shadowOpacity: 2,
+//     shadowRadius: 6,
+//     shadowColor: "black",
+//     shadowOffset: {
+//       height: 0,
+//       width: 0,
+//     },
+//     elevation: 2,
+//     marginVertical: 20,
+//   },
+//   card: {
+//     width: "80%",
+//     marginTop: 20,
+//     backgroundColor: "#F2EEEC",
+//     borderRadius: 16,
+//     shadowOpacity: 0.2,
+//     shadowRadius: 6,
+//     shadowColor: "black",
+//     shadowOffset: {
+//       height: 0,
+//       width: 0,
+//     },
+//     elevation: 2,
+//     marginVertical: 20,
+//   },
+//   thumb: {
+//     height: 150,
+//     borderTopLeftRadius: 16,
+//     borderTopRightRadius: 16,
+//     width: "100%",
+//   },
+//   infoContainer: {
+//     padding: 16,
+//   },
+//   name: {
+//     fontSize: 22,
+//     fontWeight: "bold",
+//   },
+//   price: {
+//     fontSize: 16,
+//     fontWeight: "600",
+//     marginBottom: 8,
+//   },
+//   fpbuttons: {
+//     alignItems: "center",
+//     backgroundColor: "#e56e29",
+//     padding: 5,
+//     width: "50%",
+//     borderRadius: 8,
+//     marginLeft: 10,
+//     marginBottom: 10,
+//   },
+//   fpbuttontext: {
+//     fontSize: 15,
+//     fontWeight: "bold",
+//     color: "#fff",
+//   },
+//   separator: {
+//     marginVertical: 8,
+//     borderBottomColor: "#737373",
+//     borderBottomWidth: StyleSheet.hairlineWidth,
+//   },
+//   logo: {
+//     width: 50,
+//     height: 50,
+//     resizeMode: "contain",
+//   },
+//   appheader: {
+//     backgroundColor: "#E88449",
+//   },
+//   appheadertitle: {
+//     color: "#F2EEEC",
+//     fontSize: 18,
+//     fontWeight: "bold",
+//   },
+// });

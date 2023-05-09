@@ -1,51 +1,64 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Pressable } from "react-native";
 import { Input, NativeBaseProvider, Icon, Image } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Link, Stack } from "expo-router";
 import { Appbar, FAB, useTheme } from "react-native-paper";
 
-const Separator = () => <View style={styles.separator} />;
+const Separator = () => <View style={s.separator} />;
+const s = require("../assets/styles/style");
+
+const ZoomButton = ({ title, onTap }) => {
+  return (
+    <Pressable
+      onPress={onTap}
+      style={({ pressed }) => [
+        {
+          transform: [
+            {
+              scale: pressed ? 1.07 : 1,
+            },
+          ],
+          backgroundColor: "#2277ee",
+        },
+        s.button,
+      ]}
+    >
+      <Text style={s.buttonText}>{title}</Text>
+    </Pressable>
+  );
+};
 
 function Signup() {
   const navigation = useNavigation();
   return (
     <>
-      <Appbar.Header style={styles.appheader}>
+      <Appbar.Header style={s.appheader}>
         <Appbar.BackAction
           onPress={() => navigation.goBack()}
           color="#F2EEEC"
         />
-        <Appbar.Content title="Signup" titleStyle={styles.appheadertitle} />
+        <Appbar.Content title="Signup" titleStyle={s.appheadertitle} />
       </Appbar.Header>
 
-      <SafeAreaView style={styles.container}>
-        <View style={styles.Middle}>
+      <SafeAreaView style={s.container}>
+        <View style={s.Middle}>
           <Image
             alt="value"
-            style={styles.logo1}
+            style={s.logo1}
             source={require("../assets/JKIcon.png")}
           />
-          <Text style={styles.LoginText}>
-            Signup now to enjoy AWESOME FOOD from
-          </Text>
+          <Text style={s.LoginText}>Signup now to enjoy AWESOME FOOD from</Text>
           <Image
             alt="value"
-            style={styles.logo}
+            style={s.logo}
             source={require("../assets/LogoText.png")}
           />
         </View>
 
         {/* Username Input Field */}
-        <View style={styles.buttonStyleX}>
-          <View style={styles.emailInput}>
+        <View style={s.buttonStyleX}>
+          <View style={s.emailInput}>
             <Input
               InputLeftElement={
                 <Icon
@@ -73,8 +86,8 @@ function Signup() {
         </View>
 
         {/* Password Input Field */}
-        <View style={styles.buttonStyleX}>
-          <View style={styles.emailInput}>
+        <View style={s.buttonStyleX}>
+          <View style={s.emailInput}>
             <Input
               InputLeftElement={
                 <Icon
@@ -102,8 +115,8 @@ function Signup() {
           </View>
         </View>
         {/* Mobile no Field */}
-        <View style={styles.buttonStyleX}>
-          <View style={styles.emailInput}>
+        <View style={s.buttonStyleX}>
+          <View style={s.emailInput}>
             <Input
               InputLeftElement={
                 <Icon
@@ -130,8 +143,8 @@ function Signup() {
           </View>
         </View>
         {/* Mobile no Field */}
-        <View style={styles.buttonStyleX}>
-          <View style={styles.emailInput}>
+        <View style={s.buttonStyleX}>
+          <View style={s.emailInput}>
             <Input
               InputLeftElement={
                 <Icon
@@ -160,12 +173,11 @@ function Signup() {
         <Separator />
         {/* Button */}
 
-        <View style={styles.Middle}>
-          <TouchableOpacity style={styles.fpbuttons}>
-            <Link href="/items" style={styles.fpbuttontext}>
-              Register
-            </Link>
-          </TouchableOpacity>
+        <View style={s.Middle}>
+          <ZoomButton
+            title="Register"
+            onTap={() => navigation.navigate("Items")}
+          />
         </View>
       </SafeAreaView>
     </>
@@ -181,100 +193,17 @@ export default () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff0e5",
-  },
-  logo: {
-    width: 300,
-    resizeMode: "contain",
-  },
-  logo1: {
-    marginTop: 100,
-    width: 150,
-    height: 100,
-    resizeMode: "contain",
-  },
-  LoginText: {
-    fontSize: 15,
-    fontWeight: "bold",
-    alignContent: "center",
-    color: "#6F7D71",
-    fontFamily: "sans-serif",
-  },
-  Middle: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text2: {
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingTop: 5,
-  },
-  signupText: {
-    fontWeight: "bold",
-  },
-  emailField: {
-    marginLeft: 15,
-  },
-  emailInput: {
-    marginRight: 5,
-    backgroundColor: "#fff",
-  },
-  buttonStyle: {
-    marginTop: 30,
-    marginLeft: 15,
-    marginRight: 15,
-  },
-  buttonStyleX: {
-    marginTop: 12,
-    marginLeft: 15,
-    marginRight: 15,
-  },
-  buttonDesign: {
-    backgroundColor: "#E88449",
-  },
-  lineStyle: {
-    flexDirection: "row",
-    marginTop: 30,
-    marginLeft: 15,
-    marginRight: 15,
-    alignItems: "center",
-  },
-  imageStyle: {
-    width: 80,
-    height: 80,
-    marginLeft: 20,
-  },
-  boxStyle: {
-    flexDirection: "row",
-    marginTop: 30,
-    marginLeft: 15,
-    marginRight: 15,
-    justifyContent: "space-around",
-  },
-  fpbuttons: {
-    alignItems: "center",
+  button: {
+    padding: 8,
+    marginBottom: 20,
+    borderRadius: 6,
     backgroundColor: "#e56e29",
-    padding: 5,
-    width: "60%",
+    width: 100,
   },
-  fpbuttontext: {
+  buttonText: {
     fontSize: 15,
-    fontWeight: "bold",
+    textAlign: "center",
     color: "#fff",
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  appheader: {
-    backgroundColor: "#E88449",
-  },
-  appheadertitle: {
-    color: "#F2EEEC",
-    fontSize: 18,
     fontWeight: "bold",
   },
 });

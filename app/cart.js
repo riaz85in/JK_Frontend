@@ -15,7 +15,6 @@ import {
   removeFromCart,
 } from "../reducer/cartreducer";
 import store from "../store/store";
-import { Link, Stack } from "expo-router";
 import { Text, SegmentedButtons, Button } from "react-native-paper";
 import { Input, NativeBaseProvider, Image, theme, Icon } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -25,6 +24,28 @@ import { useNavigation } from "@react-navigation/native";
 import emailjs from "@emailjs/browser";
 
 const Separator = () => <View style={styles.separator} />;
+const s = require("../assets/styles/style");
+
+const ZoomButton = ({ title, onTap }) => {
+  return (
+    <Pressable
+      onPress={onTap}
+      style={({ pressed }) => [
+        {
+          transform: [
+            {
+              scale: pressed ? 1.07 : 1,
+            },
+          ],
+          backgroundColor: "#2277ee",
+        },
+        s.button,
+      ]}
+    >
+      <Text style={s.buttonText}>{title}</Text>
+    </Pressable>
+  );
+};
 
 function Cart() {
   const navigation = useNavigation();
@@ -161,58 +182,58 @@ function Cart() {
 
   return (
     <>
-      <Appbar.Header style={styles.appheader}>
+      <Appbar.Header style={s.appheader}>
         <Appbar.BackAction
           onPress={() => navigation.goBack()}
           color="#F2EEEC"
         />
-        <Appbar.Content title="Your Order" titleStyle={styles.appheadertitle} />
+        <Appbar.Content title="Your Order" titleStyle={s.appheadertitle} />
         <Appbar.Action
           icon="home"
           onPress={() => navigation.navigate("home")}
         />
       </Appbar.Header>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={s.container}>
         <View style={{ paddingLeft: 10 }}>
-          <View style={styles.boxStyleX}>
+          <View style={s.boxStyleX}>
             <Text variant="titleMedium">Order details</Text>
           </View>
           <Separator />
           {cart.map((item) => (
             <Pressable key={item.id}>
-              <View style={styles.row}>
-                <View style={styles.firstcolumn}>
-                  <Text style={styles.firstcolumntext}>{item.quantity}X </Text>
+              <View style={s.row}>
+                <View style={s.firstcolumn}>
+                  <Text style={s.firstcolumntext}>{item.quantity}X </Text>
                 </View>
-                <View style={styles.secondcolumn}>
-                  <Text style={styles.textCenter}>{item.name} </Text>
+                <View style={s.secondcolumn}>
+                  <Text style={s.textCenter}>{item.name} </Text>
                 </View>
-                <View style={styles.thirdcolumn}>
-                  <Text style={styles.thirdcolumntext}>
+                <View style={s.thirdcolumn}>
+                  <Text style={s.thirdcolumntext}>
                     £{item.price * item.quantity}
                   </Text>
                 </View>
               </View>
             </Pressable>
           ))}
-          <View style={styles.lastrow}>
-            <View style={styles.firstcolumn}>
+          <View style={s.lastrow}>
+            <View style={s.firstcolumn}>
               <Text> </Text>
             </View>
-            <View style={styles.secondcolumn}>
+            <View style={s.secondcolumn}>
               <Text style={{ color: "white" }}>Total</Text>
             </View>
-            <View style={styles.thirdcolumn}>
+            <View style={s.thirdcolumn}>
               <Text style={{ color: "white" }}>£{calculateTotal()}</Text>
             </View>
           </View>
         </View>
-        <View style={styles.boxStyle}>
+        <View style={s.boxStyle}>
           <Text variant="titleMedium">Contact & Delivery details</Text>
         </View>
 
-        <View style={styles.buttonStyle}>
-          <View style={styles.emailInput}>
+        <View style={s.buttonStyle}>
+          <View style={s.emailInput}>
             <Input
               onChangeText={(name) => setName(name)}
               value={name}
@@ -241,8 +262,8 @@ function Cart() {
           </View>
         </View>
 
-        <View style={styles.buttonStyleX}>
-          <View style={styles.emailInput}>
+        <View style={s.buttonStyleX}>
+          <View style={s.emailInput}>
             <Input
               onChangeText={(email) => setEmail(email)}
               value={email}
@@ -270,8 +291,8 @@ function Cart() {
             />
           </View>
         </View>
-        <View style={styles.buttonStyleX}>
-          <View style={styles.emailInput}>
+        <View style={s.buttonStyleX}>
+          <View style={s.emailInput}>
             <Input
               InputLeftElement={
                 <Icon
@@ -297,8 +318,8 @@ function Cart() {
             />
           </View>
         </View>
-        <View style={styles.buttonStyleX}>
-          <View style={styles.emailInput}>
+        <View style={s.buttonStyleX}>
+          <View style={s.emailInput}>
             <DatePickerInput
               locale="en"
               label="Order date"
@@ -309,7 +330,7 @@ function Cart() {
           </View>
         </View>
 
-        <View style={styles.segbutton}>
+        <View style={s.segbutton}>
           <SegmentedButtons
             density="small"
             style={{ width: 200 }}
@@ -328,8 +349,8 @@ function Cart() {
           />
         </View>
         {value === "delivery" && (
-          <View style={styles.buttonStyleX}>
-            <View style={styles.emailInput}>
+          <View style={s.buttonStyleX}>
+            <View style={s.emailInput}>
               <Input
                 InputLeftElement={
                   <Icon
@@ -357,16 +378,16 @@ function Cart() {
           </View>
         )}
         {value === "delivery" && (
-          <View style={styles.buttonStyleX}>
-            <View style={styles.timerow}>
-              <View style={styles.timecolumn}>
+          <View style={s.buttonStyleX}>
+            <View style={s.timerow}>
+              <View style={s.timecolumn}>
                 <Button
                   onPress={() => setVisible(true)}
                   uppercase={false}
                   mode="outlined"
-                  style={styles.timebutton}
+                  style={s.timebutton}
                 >
-                  <Text style={styles.timebuttontext}>Pick time</Text>
+                  <Text style={s.timebuttontext}>Pick time</Text>
                 </Button>
                 <TimePickerModal
                   visible={visible}
@@ -379,7 +400,7 @@ function Cart() {
               <View>
                 <Text>{"        "}</Text>
               </View>
-              <View style={styles.timecolumn}>
+              <View style={s.timecolumn}>
                 <Input
                   InputLeftElement={
                     <Icon
@@ -411,22 +432,23 @@ function Cart() {
         <Separator />
         {/* Button */}
 
-        <View style={styles.Middle}>
-          <TouchableOpacity style={styles.fpbuttons}>
+        <View style={s.Middle}>
+          <TouchableOpacity style={s.fpbuttons}>
             <Button
               onPress={() => sendOrderPlacedEmail()}
-              style={styles.fpbuttontext}
+              style={s.fpbuttontext}
             >
               Submit Order
             </Button>
           </TouchableOpacity>
 
           <Separator />
-          <TouchableOpacity style={styles.fpbuttons}>
-            <Link href="/items" style={styles.fpbuttontext}>
-              Add more items
-            </Link>
-          </TouchableOpacity>
+          <View style={s.Middle}>
+            <ZoomButton
+              title="Add more items"
+              onTap={() => navigation.navigate("Items")}
+            />
+          </View>
         </View>
 
         <StatusBar style="auto" />
@@ -445,213 +467,229 @@ export default () => {
   );
 };
 
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     paddingTop: 20,
+//     paddingHorizontal: 15,
+//     backgroundColor: "#fff",
+//   },
+//   tablecontainer: {
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   scrollcontainer: {
+//     backgroundColor: "white",
+//     alignItems: "center",
+//   },
+//   emailField: {
+//     marginLeft: 15,
+//   },
+//   emailInput: {
+//     marginRight: 5,
+//     backgroundColor: "#fff",
+//   },
+//   buttonStyle: {
+//     marginTop: 30,
+//     marginLeft: 15,
+//     marginRight: 15,
+//   },
+//   buttonStyleX: {
+//     marginTop: 12,
+//     marginLeft: 15,
+//     marginRight: 15,
+//   },
+//   buttonDesign: {
+//     backgroundColor: "#E88449",
+//   },
+//   cardFirst: {
+//     width: "80%",
+//     marginTop: 20,
+//     backgroundColor: "#F2EEEC",
+//     borderRadius: 16,
+//     shadowOpacity: 0.2,
+//     shadowRadius: 6,
+//     shadowColor: "black",
+//     shadowOffset: {
+//       height: 0,
+//       width: 0,
+//     },
+//     elevation: 2,
+//     marginVertical: 20,
+//   },
+//   card: {
+//     width: "80%",
+//     marginTop: 20,
+//     backgroundColor: "#F2EEEC",
+//     borderRadius: 16,
+//     shadowOpacity: 0.2,
+//     shadowRadius: 6,
+//     shadowColor: "black",
+//     shadowOffset: {
+//       height: 0,
+//       width: 0,
+//     },
+//     elevation: 2,
+//     marginVertical: 20,
+//   },
+//   thumb: {
+//     height: 150,
+//     borderTopLeftRadius: 16,
+//     borderTopRightRadius: 16,
+//     width: "100%",
+//   },
+//   infoContainer: {
+//     padding: 16,
+//   },
+//   name: {
+//     fontSize: 22,
+//     fontWeight: "bold",
+//   },
+//   price: {
+//     fontSize: 16,
+//     fontWeight: "600",
+//     marginBottom: 8,
+//   },
+//   headertext: {
+//     fontSize: 30,
+//     fontWeight: "bold",
+//     color: "black",
+//   },
+//   Middle: {
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   separator: {
+//     marginVertical: 8,
+//     borderBottomColor: "#737373",
+//     borderBottomWidth: StyleSheet.hairlineWidth,
+//   },
+//   lineStyle: {
+//     flexDirection: "row",
+//     marginTop: 30,
+//     marginLeft: 15,
+//     marginRight: 15,
+//     alignItems: "center",
+//   },
+//   imageStyle: {
+//     width: 80,
+//     height: 80,
+//     marginLeft: 20,
+//   },
+//   boxStyle: {
+//     flexDirection: "row",
+//     marginTop: 30,
+//     marginLeft: 15,
+//     marginRight: 15,
+//     justifyContent: "space-around",
+//   },
+//   boxStyleX: {
+//     flexDirection: "row",
+//     marginTop: 5,
+//     marginRight: 20,
+//     justifyContent: "space-around",
+//   },
+//   fpbuttons: {
+//     alignItems: "center",
+//     backgroundColor: "#e56e29",
+//     padding: 5,
+//     width: "60%",
+//   },
+//   timebutton: {
+//     alignItems: "center",
+//     backgroundColor: "#e56e29",
+//     width: 120,
+//     height: 40,
+//   },
+//   fpbuttontext: {
+//     fontSize: 15,
+//     fontWeight: "bold",
+//     color: "#fff",
+//   },
+//   timebuttontext: {
+//     fontSize: 12,
+//     fontWeight: "bold",
+//     color: "#fff",
+//   },
+//   Linktext: {
+//     fontSize: 15,
+//     color: "black",
+//     textDecorationLine: "underline",
+//   },
+//   normaltext: {
+//     fontSize: 15,
+//     color: "black",
+//   },
+//   row: {
+//     flexDirection: "row",
+//     flexWrap: "wrap",
+//     backgroundColor: "#E3E4E2",
+//   },
+//   timerow: {
+//     flexDirection: "row",
+//     flexWrap: "wrap",
+//   },
+//   lastrow: {
+//     flexDirection: "row",
+//     flexWrap: "wrap",
+//     backgroundColor: "#6F7D71",
+//     color: "white",
+//   },
+//   firstcolumn: {
+//     flexDirection: "column",
+//     alignItems: "center",
+//     width: "10%",
+//   },
+//   timecolumn: {
+//     flexDirection: "column",
+//     alignItems: "center",
+//     width: "30%",
+//   },
+//   firstcolumntext: {
+//     color: "blue",
+//   },
+//   thirdcolumntext: {
+//     fontWeight: "bold",
+//   },
+//   secondcolumn: {
+//     flexDirection: "column",
+//     alignItems: "center",
+//     width: "60%",
+//   },
+//   thirdcolumn: {
+//     flexDirection: "column",
+//     alignItems: "center",
+//     width: "30%",
+//   },
+//   textCenter: {
+//     textAlign: "center",
+//   },
+//   segbutton: {
+//     marginTop: 20,
+//     alignItems: "center",
+//   },
+//   appheader: {
+//     backgroundColor: "#E88449",
+//   },
+//   appheadertitle: {
+//     color: "#F2EEEC",
+//     fontSize: 18,
+//     fontWeight: "bold",
+//   },
+// });
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 15,
-    backgroundColor: "#fff",
-  },
-  tablecontainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  scrollcontainer: {
-    backgroundColor: "white",
-    alignItems: "center",
-  },
-  emailField: {
-    marginLeft: 15,
-  },
-  emailInput: {
-    marginRight: 5,
-    backgroundColor: "#fff",
-  },
-  buttonStyle: {
-    marginTop: 30,
-    marginLeft: 15,
-    marginRight: 15,
-  },
-  buttonStyleX: {
-    marginTop: 12,
-    marginLeft: 15,
-    marginRight: 15,
-  },
-  buttonDesign: {
-    backgroundColor: "#E88449",
-  },
-  cardFirst: {
-    width: "80%",
-    marginTop: 20,
-    backgroundColor: "#F2EEEC",
-    borderRadius: 16,
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    shadowColor: "black",
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: 2,
-    marginVertical: 20,
-  },
-  card: {
-    width: "80%",
-    marginTop: 20,
-    backgroundColor: "#F2EEEC",
-    borderRadius: 16,
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    shadowColor: "black",
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: 2,
-    marginVertical: 20,
-  },
-  thumb: {
-    height: 150,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    width: "100%",
-  },
-  infoContainer: {
-    padding: 16,
-  },
-  name: {
-    fontSize: 22,
-    fontWeight: "bold",
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 8,
-  },
-  headertext: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "black",
-  },
-  Middle: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  lineStyle: {
-    flexDirection: "row",
-    marginTop: 30,
-    marginLeft: 15,
-    marginRight: 15,
-    alignItems: "center",
-  },
-  imageStyle: {
-    width: 80,
-    height: 80,
-    marginLeft: 20,
-  },
-  boxStyle: {
-    flexDirection: "row",
-    marginTop: 30,
-    marginLeft: 15,
-    marginRight: 15,
-    justifyContent: "space-around",
-  },
-  boxStyleX: {
-    flexDirection: "row",
-    marginTop: 5,
-    marginRight: 20,
-    justifyContent: "space-around",
-  },
-  fpbuttons: {
-    alignItems: "center",
+  button: {
+    padding: 8,
+    marginBottom: 20,
+    borderRadius: 6,
     backgroundColor: "#e56e29",
-    padding: 5,
-    width: "60%",
+    width: 100,
   },
-  timebutton: {
-    alignItems: "center",
-    backgroundColor: "#e56e29",
-    width: 120,
-    height: 40,
-  },
-  fpbuttontext: {
+  buttonText: {
     fontSize: 15,
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  timebuttontext: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  Linktext: {
-    fontSize: 15,
-    color: "black",
-    textDecorationLine: "underline",
-  },
-  normaltext: {
-    fontSize: 15,
-    color: "black",
-  },
-  row: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    backgroundColor: "#E3E4E2",
-  },
-  timerow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  lastrow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    backgroundColor: "#6F7D71",
-    color: "white",
-  },
-  firstcolumn: {
-    flexDirection: "column",
-    alignItems: "center",
-    width: "10%",
-  },
-  timecolumn: {
-    flexDirection: "column",
-    alignItems: "center",
-    width: "30%",
-  },
-  firstcolumntext: {
-    color: "blue",
-  },
-  thirdcolumntext: {
-    fontWeight: "bold",
-  },
-  secondcolumn: {
-    flexDirection: "column",
-    alignItems: "center",
-    width: "60%",
-  },
-  thirdcolumn: {
-    flexDirection: "column",
-    alignItems: "center",
-    width: "30%",
-  },
-  textCenter: {
     textAlign: "center",
-  },
-  segbutton: {
-    marginTop: 20,
-    alignItems: "center",
-  },
-  appheader: {
-    backgroundColor: "#E88449",
-  },
-  appheadertitle: {
-    color: "#F2EEEC",
-    fontSize: 18,
+    color: "#fff",
     fontWeight: "bold",
   },
 });
